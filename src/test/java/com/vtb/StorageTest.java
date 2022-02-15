@@ -38,4 +38,27 @@ public class StorageTest {
         Assertions.assertEquals(arrayIndexStorage.get(11), revArrayIndexStorage.get(0));
     }
 
+    @Test
+    public void CheckWrongStorageSizeTest() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            IndexStorage indexStorage = new IndexStorage(-5);
+        });
+        Assertions.assertEquals("Размер массива должен быть больше нуля!", exception.getMessage());
+
+    }
+
+    @Test
+    public void CheckWrongGetValueTest() {
+        int[] exArray = new int[]{10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
+        ArrayIndexStorage arrayIndexStorage = new ArrayIndexStorage(exArray);
+        IndexOutOfBoundsException exception = Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            arrayIndexStorage.get(-5);
+        });
+        Assertions.assertEquals("Значение введенного индекса вне границ массива", exception.getMessage());
+
+        exception = Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            arrayIndexStorage.get(100);
+        });
+        Assertions.assertEquals("Значение введенного индекса вне границ массива", exception.getMessage());
+    }
 }
